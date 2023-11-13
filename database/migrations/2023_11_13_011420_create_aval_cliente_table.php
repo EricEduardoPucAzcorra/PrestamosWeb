@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cliete', function (Blueprint $table) {
+        Schema::create('aval_cliente', function (Blueprint $table) {
             $table->id();
+            $table->integer('id_cliente')->unsigned();
+            $table->foreign('id_cliente')->references('id_cliente')->on('cliente');
+            $table->integer('id_aval')->unsigned();
+            $table->foreign('id_aval')->references('id_aval')->on('aval');
             $table->timestamps();
         });
     }
@@ -26,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cliete');
+        Schema::dropIfExists('aval_cliente');
     }
 };
