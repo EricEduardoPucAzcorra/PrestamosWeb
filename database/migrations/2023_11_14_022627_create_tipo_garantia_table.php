@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('categoria_prestamo', function (Blueprint $table) {
-            $table->increments("id_categoria_prestamo");
-            $table->string("nombre");
-            $table->string("descripcion");
+        Schema::create('tipo_garantia', function (Blueprint $table) {
+            $table->increments("id_tipo_garantia");
+            $table->string("garantia");
+            $table->string("decripcion")->nullable();
+            $table->string("objeto");
+            $table->string("caracteristicas")->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categoria_prestamo');
+        Schema::dropIfExists('tipo_garantia');
     }
 };

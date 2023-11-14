@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('tipo_prestamo', function (Blueprint $table) {
             $table->increments("id_tipo_prestamo");
             $table->string("nombre", 150);
-            $table->string("descripcion", 200);
+            $table->string("descripcion", 200)->nullable();
             $table->float("monto");
             $table->string("plazo", 100);
-            $table->string("observaciobes", 250);
+            $table->string("observaciones", 250)->nullable();
+            $table->enum("tiene_garantia", ["SI","NO"]);
+            $table->integer('id_categoria_prestamo')->unsigned();
+            $table->foreign('id_categoria_prestamo')->references('id_categoria_prestamo')->on('categoria_prestamo');
             $table->timestamps();
         });
     }
