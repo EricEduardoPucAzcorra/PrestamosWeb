@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string("telefono", 10)->nullable();
             $table->string("ceular", 10);
             $table->string("referencia", 200);
+            $table->string("clave_ine", 40)->unique();
             $table->timestamps();
         });
     }
