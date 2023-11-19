@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Persona;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/personas', function(){
+    $personas = Persona::all();
+
+    return $personas;
+});
+
 Route::get('/index', [App\Http\Controllers\Controller::class, 'index']);
+
+Route::get("/prestamos", [App\Http\Controllers\PrestamoController::class, 'index']);

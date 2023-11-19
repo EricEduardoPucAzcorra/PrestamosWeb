@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string("detalles", 250)->nullable();
             $table->enum("esfamiliar", ["SI","NO"])->nullable();
             $table->enum("esconocido", ["SI", "NO"])->nullable();
-            $table->integer("año_conocerse")->nullable();
+            $table->integer("anio_conocerse")->nullable();
             $table->timestamps();
         });
     }
