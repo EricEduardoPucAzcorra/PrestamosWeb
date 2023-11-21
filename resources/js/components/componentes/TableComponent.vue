@@ -1,43 +1,65 @@
 <template>
     <div>
-        <DataTable  :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem" v-model:selection="selectedRow" selectionMode="single" :metaKeySelection="metaKey" dataKey="id">
-            <Column v-for="(column, index) in columns" :key="index" :field="column.field" :header="column.header" ></Column>
+        <DataTable  @rowSelect="selectRow" :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem" v-model:selection="selectedRow" selectionMode="single" :metaKeySelection="false" dataKey="id"
+        v-model:filters="filters" :globalFilterFields="columnas.map(column => column.field)" @rowUnselect="onRowUnselect">
+            <template #header>
+                <input type="text" name="filtro" v-model="filters['global'].value" id="filtro" class="form-control" placeholder="Buscar registros">
+            </template>
+            <Column  v-for="(column, index) in columnas" :key="index" :field="column.field" :header="column.header" ></Column>
         </DataTable>
-        <!-- :style="column.style" -->
     </div>
 </template>
 
 <script>
+
     import DataTable from 'primevue/datatable';
     import Column from 'primevue/column';
+    import { FilterMatchMode, FilterOperator } from 'primevue/api';
+    import InputText from 'primevue/inputtext';
     export default {
         props:[
-            "name"
+            "name",
+            "colums",
+            "data"
         ],
         components:{
             "DataTable":DataTable,
-            "Column":Column
+            "Column":Column,
+            "FilterMatchMode":FilterMatchMode,
+            "InputText":InputText
         },
+
         data(){
             return{
                 name_table:"",
-                data: [
-                     { name: 'John Doe', country: { name: 'USA' }, company: 'ABC Inc', representative: { name: 'Jane Smith' } },
-                ],
-                columns: [
-                    { field: "name", header: "Name", style: "width: 25%" },
-                    { field: "country.name", header: "Country", style: "width: 25%" },
-                    { field: "company", header: "Company", style: "width: 25%" },
-                    { field: "representative.name", header: "Representative", style: "width: 25%" },
-                ],
-                selectedRow:[],
+                columnas: [],
+                selectedRow:null,
+                filters :
+                {
+                    global: { value: null, matchMode: FilterMatchMode.CONTAINS }
+                }
+
             }
         },
-        mounted() {
+        created() {
             this.name_table = this.name;
-
-            console.log('Component table.')
+            this.columnas = this.colums;
+            this.$emit('row', this.selectedRow);
         },
+        methods:{
+            selectRow(event){
+                //console.log(event.data)
+                if(event){
+                    this.$emit('row', event.data);
+                }
+            },
+            onRowUnselect(){
+                this.$emit('row', null);
+            }
+        },
+        computed:{
+
+        }
 
     }
 </script>

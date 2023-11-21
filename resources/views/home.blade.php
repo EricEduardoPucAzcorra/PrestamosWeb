@@ -5,7 +5,8 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+
+                <div class="card-header text-white" style="background: rgb(255, 132, 0)">Dashboard</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -45,8 +46,8 @@
                             <div class="card h-100">
                               <div class="card-body">
                                 <h5 class="card-title">Clientes</h5>
-                                <a class="link-primary a" href="prestamos"> <i class="fa-regular fa-circle-right"></i> Clentes</a><br>
-                                <a class="link-primary a" href="tipo_prestamos"> <i class="fa-regular fa-circle-right"></i> Avales</a><br>
+                                <a class="link-primary a" href="{{route('clientes')}}"> <i class="fa-regular fa-circle-right"></i> Clientes</a><br>
+                                <a class="link-primary a" href="{{route('avales')}}"> <i class="fa-regular fa-circle-right"></i> Avales</a><br>
 
                               </div>
                             </div>
@@ -106,4 +107,5 @@
         </div>
     </div>
 </div>
+
 @endsection

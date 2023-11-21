@@ -13,18 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('documento', function (Blueprint $table) {
-            $table->increments("id_documento");
-            $table->integer('id_tipo_documento')->unsigned();
-            $table->foreign('id_tipo_documento')->references('id_tipo_documento')->on('tipo_documento');
-            $table->string("url_document", 250);
-            $table->string("direccion_guardado", 250);
-            $table->float("tamano_float");
-            $table->string("tamano_string")->nullable();
+        Schema::create('aval_cliente', function (Blueprint $table) {
+            $table->id();
             $table->integer('id_cliente')->unsigned();
             $table->foreign('id_cliente')->references('id_persona')->on('persona');
             $table->integer('id_aval')->unsigned();
             $table->foreign('id_aval')->references('id_persona')->on('persona');
+            $table->string("detalles", 250)->nullable();
+            $table->enum("esfamiliar", ["SI","NO"])->nullable();
+            $table->enum("esconocido", ["SI", "NO"])->nullable();
+            $table->integer("anio_conocerse")->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documento');
+        Schema::dropIfExists('aval_cliente');
     }
 };

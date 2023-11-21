@@ -14,7 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tipo_documento', function (Blueprint $table) {
-            $table->id();
+            $table->increments("id_tipo_documento");
+            $table->string("etiqueta", 150);
+            $table->string("siglas", 20)->nullable();
+            $table->string("ubicacion", 150);
+            $table->string("formato", 10);
+            $table->enum("activo", [1,0]);
             $table->timestamps();
         });
     }

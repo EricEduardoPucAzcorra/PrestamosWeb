@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_prestamo', function (Blueprint $table) {
-            $table->increments("id_tipo_prestamo");
-            $table->string("nombre", 150);
-            $table->string("descripcion", 200)->nullable();
-            $table->float("monto");
-            $table->string("plazo", 100);
-            $table->string("observaciones", 250)->nullable();
-            $table->enum("tiene_garantia", ["SI","NO"]);
+        Schema::create('tipo_prestamo_tipo_documento', function (Blueprint $table) {
+            $table->id();
+            $table->integer('id_tipo_prestamo')->unsigned();
+            $table->foreign('id_tipo_prestamo')->references('id_tipo_prestamo')->on('tipo_prestamo');
+
             $table->integer('id_categoria_prestamo')->unsigned();
             $table->foreign('id_categoria_prestamo')->references('id_categoria_prestamo')->on('categoria_prestamo');
+
+            $table->integer('id_tipo_documento')->unsigned();
+            $table->foreign('id_tipo_documento')->references('id_tipo_documento')->on('tipo_documento');
+
+            $table->enum("activo", [1,0]);
             $table->timestamps();
         });
     }
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_prestamo');
+        Schema::dropIfExists('tipo_prestamo_tipo_documento');
     }
 };

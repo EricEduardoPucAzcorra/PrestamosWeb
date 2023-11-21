@@ -13,16 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('aval', function (Blueprint $table) {
-            $table->increments("id_aval");
+        Schema::create('persona', function (Blueprint $table) {
+            $table->increments("id_persona");
             $table->string("nombre", 150);
             $table->string("apellido_p", 150);
             $table->string("apellido_m", 150);
             $table->string("rfc", 13)->nullable();
             $table->string("domicilio", 200);
             $table->string("telefono", 10)->nullable();
-            $table->string("ceular", 10);
+            $table->string("celular", 10)->nullable();
             $table->string("referencia", 200);
+            $table->string("clave_ine", 40)->unique();
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('aval');
+        Schema::dropIfExists('persona');
     }
 };

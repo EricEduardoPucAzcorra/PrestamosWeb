@@ -8,10 +8,10 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="fas fa-home"></i> Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Tipo de prestamos</li>
+                        <li class="breadcrumb-item active" aria-current="page">Avales</li>
                     </ol>
                 </nav>
-                <tipo-prestamos :colums ="{{ json_encode($resultado) }}"></tipo-prestamos>
+                {{-- <tipo-prestamos :colums ="{{ json_encode($resultado) }}"></tipo-prestamos> --}}
             </div>
         </div>
     </div>
