@@ -21,6 +21,59 @@
             text-decoration: none;
             cursor: pointer;
         }
+        #wrapper {
+            display: flex;
+        }
+
+        #sidebar {
+            min-width: 250px;
+            max-width: 250px;
+            height: 100vh;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+            margin-right: 5px; /* Ajusta la separación entre el menú y el contenido principal */
+        }
+
+        #sidebar .list-group-item {
+            border: none;
+            background-color: #f8f9fa;
+            color: #495057;
+        }
+
+        #sidebar .list-group-item:hover {
+            background-color: #e9ecef;
+        }
+
+        #sidebar .list-group-item i {
+            margin-right: 10px;
+        }
+
+        #menusuperior{
+            display: none;
+            margin-right: 0;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            #wrapper {
+                flex-direction: column;
+            }
+
+            #sidebar {
+                display: none; /* Ocultar el menú en dispositivos pequeños por defecto */
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+            #menusuperior{
+                display: block;
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+        }
+        .d-show {
+            display: none;
+        }
     </style>
 
 
@@ -83,13 +136,57 @@
             </div>
         </nav>
 
+        @guest
         <main class="py-4">
+            <!-- ... Login ... -->
             @yield('content')
-
         </main>
+        @else
+        {{-- //contenido --}}
+        <div class="container" style="margin-bottom: -25px; margin-top:10px;">
+            <div class="row justify-content-center">
+                <div class="col-md-12">
+                    <div id="menusuperior">
+                        <menu-superior-component></menu-superior-component>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="wrapper">
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar" style="margin-left: 10px">
+                <menu-component></menu-component>
+            </div>
+
+            <!-- Contenido principal -->
+            <main id="page-content-wrapper" class="py-4">
+                <!-- ... (contenido principal) ... -->
+                @yield('content')
+            </main>
+        </div>
+
+        @endguest
     </div>
 
     @stack('js')
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+    <script>
+
+        // Script para ocultar el menú cuando la pantalla se ajusta a dispositivos pequeños
+        window.addEventListener('resize', function () {
+            // document.getElementById('menusuperior').classList.add('d-none');
+
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.add('d-none');
+                document.getElementById('menusuperior').classList.add('active');
+            } else {
+                document.getElementById('sidebar').classList.remove('d-none');
+                document.getElementById('menusuperior').classList.add('active');
+            }
+        });
+    </script>
 
 </body>
 </html>

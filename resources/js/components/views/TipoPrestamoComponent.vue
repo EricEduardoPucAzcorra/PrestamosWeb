@@ -1,26 +1,30 @@
 <template>
-    <div class="card-header d-flex justify-content-between align-items-center text-white" style="background: rgb(255, 132, 0)">
-        <h5 class="card-title mb-0">Tipo de prestamos</h5>
-        <div class="btn-group">
-            <button class="btn btn-secondary" style="margin-left: 2px;" title="Refrescar" v-on:click="refresh()"><i class="fa-solid fa-rotate-left" style="color: white"></i></button>
-            <button class="btn btn-info" style="margin-left: 2px;" title="Filtro" v-on:click="OpenFilter('Filtro Tipo De Prestamos')"><i class="fa-solid fa-magnifying-glass" style="color: white"></i></button>
-            <button class="btn btn-success" style="margin-left: 2px" title="Nuevo" v-on:click="OpenModal('Nuevo Tipo De Prestamo')"><i class="fa-solid fa-plus" style="color: white"></i></button>
-            <button class="btn btn-primary" style="margin-left: 2px" title="Editar" v-on:click="EditarModal('Editar Tipo De Prestamo')"><i class="fa-solid fa-pen-to-square" style="color: white"></i></button>
-            <button class="btn btn-warning" style="margin-left: 2px" title="Detalles"><i class="fa-solid fa-circle-info" style="color: white"></i></button>
+
+    <div>
+        <div class="card-header d-flex justify-content-between align-items-center text-white" style="background: rgb(255, 132, 0)">
+            <h5 class="card-title mb-0">Tipo de prestamos</h5>
+            <div class="btn-group  btn-group-sm">
+                <button class="btn btn-secondary" style="margin-left: 2px;" title="Refrescar" v-on:click="refresh()"><i class="fa-solid fa-rotate-left" style="color: white"></i></button>
+                <button class="btn btn-info" style="margin-left: 2px;" title="Filtro" v-on:click="OpenFilter('Filtro Tipo De Prestamos')"><i class="fa-solid fa-magnifying-glass" style="color: white"></i></button>
+                <button class="btn btn-success" style="margin-left: 2px" title="Nuevo" v-on:click="OpenModal('Nuevo Tipo De Prestamo')"><i class="fa-solid fa-plus" style="color: white"></i></button>
+                <button class="btn btn-primary" style="margin-left: 2px" title="Editar" v-on:click="EditarModal('Editar Tipo De Prestamo')"><i class="fa-solid fa-pen-to-square" style="color: white"></i></button>
+                <button class="btn btn-warning" style="margin-left: 2px" title="Detalles"><i class="fa-solid fa-circle-info" style="color: white"></i></button>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <table-component :name = " 'Tipo de prestamos' " :colums ="colums" :data="datos" @row="obtenerRow($event)"></table-component>
+            <modal-component v-if="modal === true" :condicion = "modal" :accione="accion" @close-modal="closeModal($event)">
+                <TipoPrestamoFormComponent :extraData = "data_selecion" @Creando = "CreadoRegistro($event)"></TipoPrestamoFormComponent>
+            </modal-component>
+
+            <filter-component v-if="filter === true" :condicion = "filter" :accione="accion" @close-modal="closeModalFilter($event)">
+                <filterTipoPrestamoComponent @busqueda = "obtenerDatos($event)"></filterTipoPrestamoComponent>
+            </filter-component>
+
         </div>
     </div>
 
-    <div class="card-body">
-        <table-component :name = " 'Tipo de prestamos' " :colums ="colums" :data="datos" @row="obtenerRow($event)"></table-component>
-        <modal-component v-if="modal === true" :condicion = "modal" :accione="accion" @close-modal="closeModal($event)">
-            <TipoPrestamoFormComponent :extraData = "data_selecion" @Creando = "CreadoRegistro($event)"></TipoPrestamoFormComponent>
-        </modal-component>
-
-        <filter-component v-if="filter === true" :condicion = "filter" :accione="accion" @close-modal="closeModalFilter($event)">
-            <filterTipoPrestamoComponent @busqueda = "obtenerDatos($event)"></filterTipoPrestamoComponent>
-        </filter-component>
-
-    </div>
 </template>
 
 <script>

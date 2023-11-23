@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <DataTable  @rowSelect="selectRow" :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem" v-model:selection="selectedRow" selectionMode="single" :metaKeySelection="false" dataKey="id"
+    <div class="table-responsive">
+        <DataTable  @rowSelect="selectRow" :value="data" paginator :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]"  :style="{ 'min-width': '60rem' }" v-model:selection="selectedRow" selectionMode="single" :metaKeySelection="false" dataKey="id"
         v-model:filters="filters" :globalFilterFields="columnas.map(column => column.field)" @rowUnselect="onRowUnselect">
             <template #header>
                 <input type="text" name="filtro" v-model="filters['global'].value" id="filtro" class="form-control" placeholder="Buscar registros">
