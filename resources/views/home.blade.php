@@ -82,7 +82,7 @@
                               <div class="card-body">
                                 <h5 class="card-title">Usuarios</h5>
                                 <a class="link-primary a" href="prestamos"> <i class="fa-regular fa-circle-right"></i> Usuarios</a><br>
-                                <a class="link-primary a" href="prestamos"> <i class="fa-regular fa-circle-right"></i> Roles</a><br>
+                                <a class="link-primary a" href="prestamos"> <i class="fa-regular fa-circle-right"></i> Permisos</a><br>
                               </div>
                             </div>
                           </div>

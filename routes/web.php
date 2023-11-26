@@ -24,8 +24,18 @@ Route::group(['middleware'=>["auth"]], function(){
     //categorias
     Route::get('/categorias_prestamos',[App\Http\Controllers\CategoriaPrestamoController::class, 'index']);
     //clientes
-    Route::get('/clientes', [App\Http\Controllers\PersonaController::class, 'viewIndex'])->name('clientes');
+    Route::get('/clientes', [App\Http\Controllers\PersonaController::class, 'viewIndex'])->name('clientes')->middleware('checkPermisos:administracion.clientes.ver');
+    Route::get('/listclientes', [App\Http\Controllers\PersonaController::class, 'getClientes'])->middleware('checkPermisos:administracion.clientes.ver');
+    Route::post('/new-persona', [App\Http\Controllers\PersonaController::class, 'store'])->middleware('checkPermisos:administracion.clientes.nuevo');
+    Route::put('/update-persona', [App\Http\Controllers\PersonaController::class, 'update'])->middleware('checkPermisos:administracion.clientes.editar');
     //avales
     Route::get('/avales', [App\Http\Controllers\AvalController::class, 'viewAvals'])->name('avales');
+
+    Route::get('/usPermisos', [App\Http\Controllers\UserPermisoController::class, 'getUserPermisos'])->middleware('checkPermisos:administracion.clientes.detalle');
+
 });
+
+
+
+
 

@@ -2,7 +2,7 @@
 <template>
     <div class="card flex justify-content-center">
         <h2 class="text-center mb-3 menu-title">Contenido</h2>
-        <PanelMenu :model="items" class="w-full md:w-20rem">
+        <PanelMenu :model="menuAuth" class="w-full md:w-20rem">
         <template #item="{ item }">
             <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
             <a v-ripple class="list-group-item list-group-item-action d-flex align-items-center cursor-pointer text-color px-3 py-2" :href="href" @click="navigate">
@@ -27,24 +27,43 @@
 <script>
     import PanelMenu from 'primevue/panelmenu';
     export default {
+        props:['permisos'],
         components:{
             "PanelMenu":PanelMenu
         },
         data(){
             return{
-                items:[
+                permisions:[],
+                menuitems:[
 
-                            {
-                                label: ' Modúlos',
-                                icon: 'pi-arrows-v',
-                                items: [
+                    {
+                        label: ' Modúlos',
+                        icon: 'pi-arrows-v',
+                        items: [
+                        ]
+                    },
+                ],
+            }
+        },
+        mounted() {
+            // console.log(this.permisos)
+            console.log('Component mounted.')
+        },
+        computed: {
+            menuAuth(){
+                this.permisions = this.permisos[0].permisos;
+                const mapeo = this.permisions.map(item => item.permiso.siglas);
 
-                                {
-                                label: ' Dashboard',
-                                icon: 'pi pi-palette',
-                                url:'/dashboard'
-                            },
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.dashboard'))
+                    this.menuitems[0].items.push({
+                        label: 'Dashboard',
+                        icon: 'pi pi-palette',
+                        url:'/dashboard'
+                    });
 
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.prestamos'))
+
+                    this.menuitems[0].items.push(
                             {
                                 label: ' Prestamos',
                                 icon: 'pi pi-list',
@@ -66,44 +85,54 @@
                                     }
                                 ]
                             },
-                            {
-                                label: ' Pagos',
-                                icon: 'pi pi-link ',
-                                items: [
-                                    {
-                                        label: ' Todos los pagos',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Pago de hoy',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Pagos atrasados',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    }
-                                ]
-                            },
-                            {
-                                label: ' Clientes',
-                                icon: 'pi pi-star',
-                                items: [
-                                    {
-                                        label: ' clientes',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Avales',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    }
-                                ]
-                            },
-                            {
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.pagos'))
+                    this.menuitems[0].items.push(
+                        {
+                            label: ' Pagos',
+                            icon: 'pi pi-link ',
+                            items: [
+                                {
+                                    label: ' Todos los pagos',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Pago de hoy',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Pagos atrasados',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                }
+                            ]
+                        }
+
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.clientes'))
+                    this.menuitems[0].items.push(
+                        {
+                            label: ' Clientes',
+                            icon: 'pi pi-star',
+                            items: [
+                                {
+                                    label: ' clientes',
+                                    icon: 'pi pi-tag',
+                                    url: '/clientes'
+                                },
+                                {
+                                    label: ' Avales',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                }
+                            ]
+                        }
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.documentos'))
+                    this.menuitems[0].items.push(
+                           {
                                 label: ' Documentos',
                                 icon: 'pi pi-file',
                                 items: [
@@ -128,77 +157,75 @@
                                         url: '/#'
                                     }
                                 ]
-                            },
+                            }
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.garantias'))
+                    this.menuitems[0].items.push(
+                        {
+                            label: ' Garantias',
+                            icon: 'pi pi-car',
+                            items: [
+                                {
+                                    label: ' Garantias clientes',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Tipos garantias',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                }
+                            ]
+                        },
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.usuarios'))
+                    this.menuitems[0].items.push(
+                        {
+                            label: ' Usuarios',
+                            icon: 'pi pi-users',
+                            items: [
+                                {
+                                    label: ' Usuarios',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Roles',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                }
+                            ]
+                        },
+                    );
+                if(mapeo.some(sigla=>sigla === 'administracion.modulos.estadisticas'))
+                    this.menuitems[0].items.push(
+                        {
+                            label: ' Estadisticas',
+                            icon: 'pi pi-chart-bar',
+                            items: [
+                                {
+                                    label: 'Prestamos del mes',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Esquema de pagos',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                },
+                                {
+                                    label: ' Ganancias',
+                                    icon: 'pi pi-tag',
+                                    url: '/#'
+                                }
+                            ]
+                        },
+                    );
 
-                            {
-                                label: ' Garantias',
-                                icon: 'pi pi-car',
-                                items: [
-                                    {
-                                        label: ' Garantias clientes',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Tipos garantias',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    }
-                                ]
-                            },
-                            {
-                                label: ' Usuarios',
-                                icon: 'pi pi-users',
-                                items: [
-                                    {
-                                        label: ' Usuarios',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Roles',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    }
-                                ]
-                            },
-                            {
-                                label: ' Estadisticas',
-                                icon: 'pi pi-chart-bar',
-                                items: [
-                                    {
-                                        label: 'Prestamos del mes',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Esquema de pagos',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    },
-                                    {
-                                        label: ' Ganancias',
-                                        icon: 'pi pi-tag',
-                                        url: '/#'
-                                    }
-                                ]
-                            },
-
-                        ]
-                    },
-
-
-                    // {
-                    //     label: 'Programmatic',
-                    //     icon: 'pi pi-link',
-
-                    // },
-                ],
+                return this.menuitems;
             }
         },
-        mounted() {
-            console.log('Component mounted.')
-        }
+
     }
 </script>
 

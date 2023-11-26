@@ -142,34 +142,56 @@
             @yield('content')
         </main>
         @else
-        {{-- //contenido --}}
-        <div class="container" style="margin-bottom: -25px; margin-top:10px;">
-            <div class="row justify-content-center">
-                <div class="col-md-12">
-                    <div id="menusuperior">
-                        <menu-superior-component></menu-superior-component>
-                    </div>
-                </div>
+
+        <!-- Agrega este código al cuerpo de tu archivo Blade -->
+        <div class="spinner-container text-center" id="loader">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Cargando...</span>
             </div>
         </div>
 
-        <div id="wrapper">
-            <!-- Sidebar -->
-            <div class="bg-light border-right" id="sidebar" style="margin-left: 10px">
-                <menu-component></menu-component>
+        <div id="contenedor" style="display: none">
+
+            {{-- //contenido --}}
+            <div class="container" style="margin-bottom: -25px; margin-top:10px; ">
+                <div class="row justify-content-center">
+                    <div class="col-md-12">
+                        <div id="menusuperior">
+                            <menu-superior-component :permisos="{{ json_encode(Auth::user()->with('permisos')->get()) }}"></menu-superior-component>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Contenido principal -->
-            <main id="page-content-wrapper" class="py-4">
-                <!-- ... (contenido principal) ... -->
-                @yield('content')
-            </main>
+            <div id="wrapper">
+                <!-- Sidebar -->
+                <div class="bg-light border-right" id="sidebar" style="margin-left: 10px">
+                    <menu-component :permisos="{{ json_encode(Auth::user()->with('permisos')->get()) }}" ></menu-component>
+                </div>
+
+                <!-- Contenido principal -->
+                <main id="page-content-wrapper" class="py-4">
+                    <!-- ... (contenido principal) ... -->
+                    @yield('content')
+                </main>
+            </div>
+
         </div>
 
         @endguest
     </div>
 
     @stack('js')
+
+    <script>
+        window.onload = function () {
+            // Oculta el spinner cuando la página está completamente cargada
+            document.getElementById("loader").style.display = "none";
+
+            document.getElementById("contenedor").style.display = "block";
+
+        };
+    </script>
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script>

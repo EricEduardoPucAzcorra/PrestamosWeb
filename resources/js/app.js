@@ -29,6 +29,7 @@ import MenuComponent from './components/componentes/MenuComponent.vue';
 import MenuSuperiorComponent from './components/componentes/MenuSuperiorComponent.vue'
 //views
 import TipoPrestamoComponent from './components/views/TipoPrestamoComponent.vue';
+import ClienteComponent from './components/views/ClienteComponent.vue';
 //componentes
 app.component('example-component', ExampleComponent);
 app.component('table-component', TableComponent);
@@ -41,5 +42,6 @@ app.component('menu-superior-component', MenuSuperiorComponent)
 
 //views
 app.component('tipo-prestamos', TipoPrestamoComponent);
+app.component('clientes',ClienteComponent);
 
 app.mount('#app');

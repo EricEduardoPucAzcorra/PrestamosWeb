@@ -5,13 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
+                {{-- {{json_encode(Auth::user()->with('permisos')->get())}} --}}
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{route('dashboard')}}"><i class="fas fa-home"></i> Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Clientes</li>
                     </ol>
                 </nav>
-                {{-- <tipo-prestamos :colums ="{{ json_encode($resultado) }}"></tipo-prestamos> --}}
+                <clientes :colums ="{{ json_encode($columnas) }}" :permisos="{{ json_encode(Auth::user()->with('permisos')->get()) }}"></clientes>
             </div>
         </div>
     </div>

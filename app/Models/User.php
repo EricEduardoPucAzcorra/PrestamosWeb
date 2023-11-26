@@ -12,13 +12,12 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    public $table = 'users';
+
+    public $primaryKey = "id_usuario";
+
     protected $fillable = [
-        'name',
+        'usuario',
         'email',
         'password',
     ];
@@ -41,4 +40,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function permisos()
+    {
+        return $this->hasMany(User_Permiso::class, 'id_usuario');
+    }
+
+
+    public function hasPermission($permisoBuscado)
+    {
+        return $this->permisos->contains(function ($permiso) use ($permisoBuscado) {
+            // Verificar si el subjson "permiso" existe y su campo "siglas" coincide
+            return isset($permiso->permiso['siglas']) && $permiso->permiso['siglas'] === $permisoBuscado;
+        });
+    }
+
+
+
 }
